@@ -1,0 +1,231 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+    <!--<title>Dashboard</title>-->
+    <!--<style>-->
+    <!--p {-->
+        <!--text-align: center;-->
+    <!--}-->
+    <!--</style>-->
+<!--</head>-->
+
+<!--<body style="background-color: red">-->
+
+    <!--<p>${project}</p>-->
+    <!--<p>${culprits}</p>-->
+    <!--<p>${build_num}</p>-->
+    <!--<p>${last_execute_time}</p>-->
+    <!--<p>&{code_coverage}</p>-->
+
+<!--</body>-->
+<!--</html>-->
+
+<html>
+    <head>
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+        <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>     
+        <script type="text/javascript">
+
+            var xmlhttp;
+
+            // Are we using a modern browser or ...
+            if (window.XMLHttpRequest) {
+              // code for IE7+, Firefox, Chrome, Opera, Safari
+              xmlhttp=new XMLHttpRequest();
+            } else {
+              // code for IE6, IE5
+              xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            // This will render the two output which substitute the
+            // elements id="raw" and id="forin"
+            function GetItems()
+            {
+              if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+                // var jsonobj = eval ("(" + xmlhttp.responseText + ")");
+                var jsonobj = JSON.parse(xmlhttp.responseText);
+                    document.getElementById("project").innerHTML = jsonobj.project.slice(18);
+                    document.getElementById("culprits").innerHTML = jsonobj.culprits;
+                    document.getElementById("build_num_value").innerHTML = jsonobj.build_num;
+                    document.getElementById("last_execute_time_value").innerHTML = jsonobj.last_execute_time;
+                    document.getElementById("code_coverage_value").innerHTML = jsonobj.code_coverage.toPrecision(3);
+                    document.getElementById("body").style.background = jsonobj.status;
+                    
+                    barpercent = jsonobj.code_coverage.toPrecision(3) + '%';
+                    $("#bar").css('width',barpercent);
+                    $(".progress-label").css("-webkit-text-stroke-color",jsonobj.status);
+                    
+              }
+            }
+
+            // xmlhttp.onreadystatechange = GetArticles;
+            // the GetItems function will be triggered once the ajax
+            // request is terminated.
+            xmlhttp.onload = GetItems;
+            // send the request in an async way
+            projects={{ simple_jobs|safe }};
+            
+            current_project=0;
+            setInterval(
+                    function()
+                    {
+                        if (projects.length == current_project){
+                            current_project = 0;
+                        }
+                        xmlhttp.open("GET", "/data_project/" + projects[current_project], true);
+                        xmlhttp.send();
+                        current_project ++;
+                    }, 10000);                                
+
+        </script>     
+        
+        <style>
+
+            body{
+                height: 100%;
+                width: 100%;
+                padding: 0px;
+                margin:0;
+            }
+
+            .block_up {
+                width: 100%;
+                height: 50%;
+                /*background: yellow;*
+
+                /* Vertical align: 
+                align-items: center;*/
+                /* Horizontal align: 
+                justify-content: center;*/
+
+                /* Safari:
+                display: -webkit-flex;
+                -webkit-align-items: center;
+                -webkit-justify-content: center; */
+            }
+            .block_down {
+                width: 100%;
+                height: 49%;
+                /*background: yellow;*/
+            }
+            #build_num {
+                width: 50%;
+                float: left;
+                height: 50%;
+                /*background-color: red;*/
+                font-size: 140px;
+                text-align: right;
+                /*display: flex;*/
+                /*align-items: center;*/
+                /* Horizontal align: */
+                /*justify-content: center;*/
+
+                /* Safari: */
+                /*display: -webkit-flex;*/
+                /*-webkit-align-items: center;*/
+                /*-webkit-justify-content: center;*/
+            }
+            #last_execute_time {
+                width: 100%;
+                float: left;
+                height: 50%;
+                /*background-color: gray;*/
+                font-size: 120px;
+                text-align: center;
+                 /*display: flex;*/
+                /* Vertical align: */
+                /*align-items: center;*/
+                /* Horizontal align: */
+                /*justify-content: center;*/
+
+                /* Safari: */
+                /*display: -webkit-flex;*/
+                /*-webkit-align-items: center;*/
+                /*-webkit-justify-content: center;*/
+            }
+            #code_coverage {
+                width: 50%;
+                float: left;
+                height: 50%;
+                /*background-color: blue;*/
+                font-size: 140px;
+                 /*display: flex;*/
+                /* Vertical align: */
+                /*align-items: center;*/
+                /* Horizontal align: */
+                /*justify-content: center;*/
+
+                /* Safari: */
+                /*display: -webkit-flex;*/
+                /*-webkit-align-items: center;*/
+                /*-webkit-justify-content: center;*/
+            }
+        #progressbar{background-color:transparent;border:20px solid #fff;position:relative;border-radius:15px;min-width:60%;height:150px}
+        .progress-label{position:absolute;-webkit-text-stroke-width:5px;-webkit-text-stroke-color:transparent;text-align:center;line-height:150px;width:100%}
+        #progress {
+         width: 500px;   
+         border: 1px solid black;
+         position: relative;
+         padding: 3px;
+        }
+    
+        #percent {
+         position: absolute;   
+         left: 50%;
+        }
+
+        #bar {
+         height: 100%;
+         background-color: #fff;
+        }
+            p {
+                text-align: center;
+            }
+            h1 {
+                text-align: center;
+                text-decoration-color: #ffffff;
+                color: #ffffff;
+                font-size: 140px;
+            }
+            h5 {
+                text-align: center;
+                text-decoration-color: #ffffff;
+                color: #ffffff;
+                font-size: 40px;
+            }
+            i {
+                margin-right: 20px;
+            }
+            @font-face
+            {
+            font-family: stratio;
+            src: url(static/Brandon_bld.otf) format("opentype");
+            }
+        </style>
+    </head>
+    <body id="body" style="color: #ffffff; font-family: stratio; background: #FF550E">
+        <div class="block_up" id="project_block">
+            <h1 id="project">${project}</h1>
+            <h5 id="culprits">${culprits}</h5>
+        </div>
+            <div class="block_down">
+                <div id="build_num">
+                    <i class="fa fa-tasks"></i>
+                    <span id="build_num_value" style="margin-right: 20%">${build_num}</span>
+                </div>
+                <div id="code_coverage">
+                    <div id="progressbar"><div id="bar">
+                        <div class="progress-label" id="code_coverage_value">${code_coverage}%</div>
+                        </div>
+                    </div>    
+                </div>
+                <div id="last_execute_time">
+                    <i class="fa fa-clock-o"></i>
+                    <span id="last_execute_time_value">${last_execute_time}</span>
+                </div>
+
+            </div>
+    </body>
+
+</html>

@@ -55,3 +55,9 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# Pycharm Files
+.idea/
+
+# Configuration File
+conf.py
