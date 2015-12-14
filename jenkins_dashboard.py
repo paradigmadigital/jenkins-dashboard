@@ -6,6 +6,7 @@ import json
 
 app = Flask(__name__)
 
+
 @app.route('/jenkins_dashboard')
 def jenkins_dashboard():
     return render_template('jenkins_dashboard.html', simple_jobs=json.dumps(SIMPLE_JOBS))

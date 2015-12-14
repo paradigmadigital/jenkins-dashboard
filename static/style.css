@@ -1,0 +1,105 @@
+@charset "utf-8";
+/* CSS Document */
+
+body{
+    height: 100%;
+    width: 100%;
+    padding: 0px;
+    margin:0;
+}
+
+.block_up {
+    width: 100%;
+    height: 50%;
+}
+
+.block_down {
+    width: 100%;
+    height: 49%;
+}
+
+#build_num {
+    width: 50%;
+    float: left;
+    height: 50%;
+    font-size: 140px;
+    text-align: right;
+}
+
+#last_execute_time {
+    width: 100%;
+    float: left;
+    height: 50%;
+    font-size: 120px;
+    text-align: center;
+}
+
+#code_coverage {
+    width: 50%;
+    float: left;
+    height: 50%;
+    font-size: 140px;
+
+}
+
+#progressbar{
+    background-color:transparent;
+    border:20px solid #fff;
+    position:relative;
+    border-radius:15px;
+    min-width:60%;
+    height:150px
+}
+
+.progress-label{
+    position:absolute;
+    -webkit-text-stroke-width:5px;
+    -webkit-text-stroke-color:transparent;
+    text-align:center;
+    line-height:150px;
+    width:100%
+}
+
+#progress {
+    width: 500px;
+    border: 1px solid black;
+    position: relative;
+    padding: 3px;
+}
+
+#percent {
+    position: absolute;
+    left: 50%;
+}
+
+#bar {
+    height: 100%;
+    background-color: #fff;
+}
+
+p {
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+    text-decoration-color: #ffffff;
+    color: #ffffff;
+    font-size: 140px;
+}
+
+h5 {
+    text-align: center;
+    text-decoration-color: #ffffff;
+    color: #ffffff;
+    font-size: 40px;
+}
+
+i {
+    margin-right: 20px;
+}
+
+@font-face{
+    font-family: stratio;
+    src: url(Brandon_bld.otf) format("opentype");
+}
